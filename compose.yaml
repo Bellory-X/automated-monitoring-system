@@ -1,0 +1,14 @@
+services:
+  manager:
+    container_name: manager
+    build: ./
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_MAIL_HOST=smtp.yandex.ru
+      - SPRING_MAIL_PORT=465
+      - SPRING_MAIL_USERNAME=beligto.tsyrenzhapov@yandex.ru
+      - SPRING_MAIL_PASSWORD=GODofWAR9334
+      - SPRING_MAIL_PROTOCOL=smtps
+      - SPRING_MAIL_ADDRESS=beligto.tsyrenzhapov@yandex.ru
+      - SPRING_MAIL_TITLE=automated monitoring system
