@@ -1,6 +1,8 @@
 package org.softaria.ams.app.api;
 
+import jakarta.mail.MessagingException;
+
 public interface EmailService {
 
-    void sendEmail();
+    void sendEmail() throws MessagingException;
 }

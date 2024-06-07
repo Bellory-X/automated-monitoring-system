@@ -1,8 +1,8 @@
 package org.softaria.ams.app.port;
 
+import org.softaria.ams.app.api.EmailService;
+import org.softaria.ams.app.api.WebPageService;
 import org.softaria.ams.app.api.WebUrlsDto;
-import org.softaria.ams.app.impl.DefaultEmailService;
-import org.softaria.ams.app.impl.DefaultWebPageService;
 import org.softaria.ams.app.api.WebPageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class FormController {
 
-    private final DefaultEmailService emailService;
-    private final DefaultWebPageService webPageService;
+    private final EmailService emailService;
+    private final WebPageService webPageService;
 
     @Autowired
-    public FormController(DefaultEmailService emailService, DefaultWebPageService webPageService) {
+    public FormController(EmailService emailService, WebPageService webPageService) {
         this.emailService = emailService;
         this.webPageService = webPageService;
     }
@@ -30,7 +30,10 @@ public class FormController {
 
     @PostMapping(FormUrl.SEND_TO_SECRETARY_URL)
     public String sendEmail() {
-        emailService.sendEmail();
+        try {
+            emailService.sendEmail();
+        } catch (Exception ignored) {
+        }
         return "redirect:/";
     }
 
