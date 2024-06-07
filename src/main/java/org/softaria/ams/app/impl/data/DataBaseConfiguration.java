@@ -1,4 +1,4 @@
-package org.softaria.ams.platform.db;
+package org.softaria.ams.app.impl.data;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

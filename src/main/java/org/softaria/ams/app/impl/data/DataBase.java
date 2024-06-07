@@ -1,10 +1,10 @@
-package org.softaria.ams.platform.db;
+package org.softaria.ams.app.impl.data;
 
 import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static org.softaria.ams.platform.db.DataBase.WebPageStatus.*;
+import static org.softaria.ams.app.impl.data.DataBase.WebPageStatus.*;
 
 public class DataBase {
     private final Map<String, Triplet> webPages = new HashMap<>();
@@ -44,13 +44,8 @@ public class DataBase {
         if (webPages.containsKey(url)) {
             var webPage = webPages.get(url);
             switch (webPage.status) {
-                case UNMODIFIED, UPDATED, DELETED: {
-                    webPage.status = DELETED;
-                    break;
-                }
-                case CREATED: {
-                    webPages.remove(url);
-                }
+                case UNMODIFIED, UPDATED, DELETED -> webPage.status = DELETED;
+                case CREATED -> webPages.remove(url);
             }
         }
         lock.unlock();
@@ -58,7 +53,7 @@ public class DataBase {
 
     public String findContent(String url) {
         if (!webPages.containsKey(url)) {
-            throw new DataBaseException("Could not find content for url: " + url);
+            return "";
         }
         return webPages.get(url).newPage;
     }

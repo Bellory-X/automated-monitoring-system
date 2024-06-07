@@ -1,11 +1,11 @@
-package org.softaria.ams.app.mail;
+package org.softaria.ams.app.impl;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.softaria.ams.app.queries.features.WebPageQueries;
-import org.softaria.ams.core.features.WebPageCommands;
+import org.softaria.ams.app.api.EmailService;
+import org.softaria.ams.app.impl.data.WebPageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -13,25 +13,22 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmailService {
+public class DefaultEmailService implements EmailService {
 
-    private final Logger logger = LoggerFactory.getLogger(EmailService.class);
+    private final Logger logger = LoggerFactory.getLogger(DefaultEmailService.class);
     private final EmailConfigurationProperties properties;
     private final JavaMailSender mailSender;
-    private final WebPageQueries queries;
-    private final WebPageCommands commands;
+    private final WebPageRepository repository;
 
     @Autowired
-    public EmailService(
+    public DefaultEmailService(
             EmailConfigurationProperties properties,
             JavaMailSender mailSender,
-            WebPageQueries queries,
-            WebPageCommands commands
+            WebPageRepository repository
     ) {
         this.properties = properties;
         this.mailSender = mailSender;
-        this.queries = queries;
-        this.commands = commands;
+        this.repository = repository;
     }
 
     public void sendEmail() {
@@ -41,7 +38,7 @@ public class EmailService {
             helper.setFrom(properties.username());
             helper.setTo(properties.address());
             helper.setSubject(properties.title());
-            helper.setText(queries.getWebPageInfo().getMessage());
+            helper.setText(repository.getWebUrls().getMessage());
             mailSender.send(mimeMessage);
         } catch (MessagingException e) {
             logger.error(e.getMessage());
@@ -51,6 +48,6 @@ public class EmailService {
     @Scheduled(cron = "0 0 0 * * *")
     public void sendEmailAndArchive() {
         sendEmail();
-        commands.archive();
+        repository.archive();
     }
 }

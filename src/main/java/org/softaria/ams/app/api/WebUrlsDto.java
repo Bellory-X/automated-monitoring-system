@@ -1,7 +1,7 @@
-package org.softaria.ams.app.dto;
+package org.softaria.ams.app.api;
 
 import com.google.common.collect.ImmutableList;
-import org.softaria.ams.platform.Validator;
+import org.softaria.ams.util.Validator;
 
 public record WebUrlsDto(
         ImmutableList<String> deletedPageUrls,

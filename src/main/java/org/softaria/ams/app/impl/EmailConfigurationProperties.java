@@ -1,4 +1,4 @@
-package org.softaria.ams.app.mail;
+package org.softaria.ams.app.impl;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

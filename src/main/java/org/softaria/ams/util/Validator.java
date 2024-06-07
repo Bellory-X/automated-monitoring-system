@@ -1,4 +1,4 @@
-package org.softaria.ams.platform;
+package org.softaria.ams.util;
 
 import java.util.Objects;
 

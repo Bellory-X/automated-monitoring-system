@@ -1,4 +1,4 @@
-package org.softaria.ams.app.web;
+package org.softaria.ams.app.port;
 
 public interface FormUrl {
     String SEND_TO_SECRETARY_URL = "/email/send";

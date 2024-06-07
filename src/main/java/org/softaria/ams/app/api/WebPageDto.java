@@ -1,4 +1,4 @@
-package org.softaria.ams.app.dto;
+package org.softaria.ams.app.api;
 
 import java.util.Objects;
 
